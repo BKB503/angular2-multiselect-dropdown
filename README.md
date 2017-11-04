@@ -7,10 +7,6 @@ Angular 2 multiselect dropdown component for web applications. Easy to integrate
 # [Documentation](http://cuppalabs.github.io/components/multiselectDropdown) | [Demos / Examples](https://cuppalabs.github.io/angular2-multiselect-dropdown).
 
 ## Getting Started
-### Installation
-- The Mutiselect Dropdown package is published on the [npm](https://www.npmjs.com/package/angular2-multiselect-dropdown) Registry. 
-- Install the package :
-    `npm install angular2-multiselect-dropdown`
 
 - Once installed import `AngularMultiSelectModule` from the installed package into your module as follows:
 
