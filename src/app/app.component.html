@@ -31,12 +31,28 @@
       </div>
     </div>
     <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-3">
+          <h4>Client-side infinite scrolling, dynamic load and search. This will load all Git hub Repos</h4>
+          <angular2-multiselect 
+          [data]="dynamicExampleList"
+          [(ngModel)]="dynamicExampleSelectedItems"
+          [settings]="dynamicExampleSettings"
+          (onSelect)="onItemSelect($event)"
+          (onDeSelect)="OnItemDeSelect($event)"
+          (onSelectAll)="onSelectAll($event)" 
+          (onDeSelectAll)="onDeSelectAll($event)"
+          (onScrollEnd)="loadMoreData($event)"
+          (onTyped) ="loadSearchData($event)">
+        </angular2-multiselect></div>
+    </div>
+    <div class="row">
     <div class="col-md-1"></div>
     <div class="col-md-3">
         <h4>Single Selection</h4>
         <angular2-multiselect [data]="singleSelectionList" [(ngModel)]="singleSelectionselectedItems" [settings]="singleSelectionSettings" (onSelect)="onItemSelect($event)" (onDeSelect)="OnItemDeSelect($event)"></angular2-multiselect>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
         <h4>MultiSelect, Show all Selected, Select All</h4>
         <angular2-multiselect [data]="basicExampleList" [(ngModel)]="basicExampleSelectedItems" [settings]="basicExampleSettings" (onSelect)="onItemSelect($event)" (onDeSelect)="OnItemDeSelect($event)"  (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event)"></angular2-multiselect>
     </div>
@@ -62,34 +78,15 @@
     </div>
     <div class="row">
       <div class="col-md-1"></div>
-      <div class="col-md-4">
+      <div class="col-md-3">
         <h4>Group By - List Items</h4>
         <angular2-multiselect [data]="groupByExampleList" [(ngModel)]="groupByExampleSelectedItems" [settings]="groupByExampleSettings" (onSelect)="onItemSelect($event)" (onDeSelect)="OnItemDeSelect($event)"  (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event)"></angular2-multiselect>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-3">
         <h4>Reset Dropdown</h4>
         <div class="col-md-2"><button (click)="changeData()" class="btn btn-danger">Reset</button></div>
         <div class="col-md-10"><angular2-multiselect [data]="resetExampleList" [(ngModel)]="resetExampleSelectedItems" [settings]="resetExampleSettings" (onSelect)="onItemSelect($event)" (onDeSelect)="OnItemDeSelect($event)"  (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event)"></angular2-multiselect></div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-1"></div>
-      <div class="col-md-4">
-        <h4>client-side infinite scrolling, dynamic load and search</h4>
-        <div class="col-md-10">
-            <angular2-multiselect 
-            [data]="dynamicExampleList"
-            [(ngModel)]="dynamicExampleSelectedItems"
-            [settings]="dynamicExampleSettings"
-            (onSelect)="onItemSelect($event)"
-            (onDeSelect)="OnItemDeSelect($event)"
-            (onSelectAll)="onSelectAll($event)" 
-            (onDeSelectAll)="onDeSelectAll($event)"
-            (onScrollEnd)="loadDynamicData($event)"
-            (onTyped) ="onDynamicSearch($event)">
-          </angular2-multiselect>
-        </div>
-      </div>
-
-    </div>
+  
 </div>

@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Http,Response } from "@angular/http";
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/map';
+import { Observable } from "rxjs/Observable";
 
 @Component({
   selector: 'app-root',
@@ -28,9 +33,12 @@ export class AppComponent implements OnInit {
   placeholderExampleSelectedItems = [];
   placeholderExampleSettings = {};
 
-  dynamicExampleList = this.createDynamicListItemData();
+  dynamicExampleList = [];
+  
   dynamicExampleSelectedItems = [];
-  dynamicExampleSettings ={};
+  dynamicExampleSettings = {};
+  searchTerm: string='select2';
+  pageNo: number=0;
 
   resetExampleList = [];
   resetExampleSelectedItems = [];
@@ -40,10 +48,11 @@ export class AppComponent implements OnInit {
   groupByExampleSelectedItems = [];
   groupByExampleSettings = {};
 
-  constructor() {
+  constructor(private _http: Http ) {
 
   }
   ngOnInit() {
+    this.getAndMapReposData(this.pageNo,this.searchTerm);
     this.singleSelectionList = [
       { "id": 1, "itemName": "India" },
       { "id": 2, "itemName": "Singapore" },
@@ -142,10 +151,10 @@ export class AppComponent implements OnInit {
       classes: "myclass custom-class",
       searchPlaceholderText: "Custom Placeholder text"
     };
-    
+
 
     this.dynamicExampleSettings = {
-      text: "Select List Item",
+      text: "Select Repository Item",
       selectAllText: 'Select All',
       unSelectAllText: 'UnSelect All',
       enableSearchFilter: true,
@@ -228,30 +237,41 @@ export class AppComponent implements OnInit {
     this.resetExampleSelectedItems = [];
   }
 
-  public loadDynamicData(pageNo: number) {
-    // if (this.pageNo != pageNo) {
-    //   
-    // }
+  public loadMoreData(pageNo: number) {
+    console.log(pageNo);
+   this.getAndMapReposData(pageNo,this.searchTerm)
+    
   }
 
-  public onDynamicSearch(searchTerm: string) {
+  public loadSearchData(searchTerm: string) {
     console.log(searchTerm);
-    //this.search = searchTerm;
-   
+    this.searchTerm = searchTerm;
+    this.getAndMapReposData(this.pageNo,this.searchTerm)
+  }
+ 
+
+  private getRepos(pageNo: number, search: string): Observable<any>
+  {
+    var url = `https://api.github.com/search/repositories?page=${pageNo}&q=${search}`
+      //this._http.get(url).map((response: Response => response.json());
+      return this._http.get(url)
+      .map((response: Response) => <any>response.json())
+      //.do(data => console.log('All: ' + JSON.stringify(data)));
+     
   }
 
-  private createDynamicListItemData()
+  public getAndMapReposData(pageNo: number, search:string)
   {
-    //{ "id": 1, "itemName": "India" }
-    var testData=[]
-    for(var i =0;i< 30;i++)
-      {
-          testData.push({
-            id:i,
-            itemName: "List Item #" + i
+    this.getRepos(pageNo,search).subscribe(x=>{
+      if(x.items)
+        {
+          for (var i = 0; i < x.items.length; i++) {
+          this.dynamicExampleList.push({
+            id: x.items[i].id,
+            itemName: x.items[i].full_name
           })
-      }
-
-      return testData;
+        }
+        }
+    });
   }
 }
