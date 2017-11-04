@@ -28,9 +28,9 @@ export class AppComponent implements OnInit {
   placeholderExampleSelectedItems = [];
   placeholderExampleSettings = {};
 
-  dynamicExampleList = [];
+  dynamicExampleList = this.createDynamicListItemData();
   dynamicExampleSelectedItems = [];
-  dynamicExampleSettings = {};
+  dynamicExampleSettings ={};
 
   resetExampleList = [];
   resetExampleSelectedItems = [];
@@ -142,6 +142,7 @@ export class AppComponent implements OnInit {
       classes: "myclass custom-class",
       searchPlaceholderText: "Custom Placeholder text"
     };
+    
 
     this.dynamicExampleSettings = {
       text: "Select List Item",
@@ -239,8 +240,18 @@ export class AppComponent implements OnInit {
    
   }
 
-  private createDynamicListData()
+  private createDynamicListItemData()
   {
     //{ "id": 1, "itemName": "India" }
+    var testData=[]
+    for(var i =0;i< 30;i++)
+      {
+          testData.push({
+            id:i,
+            itemName: "List Item #" + i
+          })
+      }
+
+      return testData;
   }
 }
