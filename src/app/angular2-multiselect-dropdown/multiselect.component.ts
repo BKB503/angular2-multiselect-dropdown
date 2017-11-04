@@ -1,4 +1,4 @@
-import { Component, OnInit, NgModule, OnChanges, ViewEncapsulation, forwardRef, Input, Output, EventEmitter, ElementRef, AfterViewInit, Pipe, PipeTransform } from '@angular/core';
+import { Component, OnInit, NgModule, OnChanges, ViewEncapsulation, ViewChild, forwardRef, Input, Output, EventEmitter, ElementRef, AfterViewInit, Pipe, PipeTransform } from '@angular/core';
 import { FormsModule, NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ListItem, MyException } from './multiselect.model';
@@ -6,6 +6,7 @@ import { DropdownSettings } from './multiselect.interface';
 import { ClickOutsideDirective } from './clickOutside';
 import { ListFilterPipe } from './list-filter';
 import { groupByPipe } from './group-by';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 
 export const DROPDOWN_CONTROL_VALUE_ACCESSOR: any = {
@@ -44,10 +45,19 @@ export class AngularMultiSelect implements OnInit, ControlValueAccessor {
     @Output('onDeSelectAll')
     onDeSelectAll: EventEmitter<Array<ListItem>> = new EventEmitter<Array<ListItem>>();
 
+    @Output('onScrollEnd')
+    onScrollEnd: EventEmitter<number> = new EventEmitter<number>();
+
+    @Output('onTyped')
+    onTyped: EventEmitter<string> = new EventEmitter<string>();
+
+    @ViewChild('svsMsList') svsMsList: any;
+
     public selectedItems: Array<ListItem>;
     public isActive: boolean = false;
     public isSelectAll: boolean = false;
     public groupedData: Array<ListItem>;
+    private page = 0;
     filter: ListItem = new ListItem();
     defaultSettings: DropdownSettings = {
         singleSelection: false,
@@ -109,6 +119,22 @@ export class AngularMultiSelect implements OnInit, ControlValueAccessor {
         if (this.data.length == this.selectedItems.length) {
             this.isSelectAll = true;
         }
+    }
+
+    scrollEnd() {
+        let div = this.svsMsList.nativeElement;
+        let atTop = div.scrollTop === 0;
+        let atBottom = div.offsetHeight + div.scrollTop === div.scrollHeight;
+        if (atBottom) {
+            this.page = this.page + 1;
+            this.onScrollEnd.emit(this.page);
+
+        }
+    }
+
+    onFilterInput(term: string) {
+        console.log(term);
+        this.onTyped.emit(term);
     }
     private onTouchedCallback: () => void = noop;
     private onChangeCallback: (_: any) => void = noop;
@@ -211,8 +237,8 @@ export class AngularMultiSelect implements OnInit, ControlValueAccessor {
             this.onDeSelectAll.emit(this.selectedItems);
         }
     }
-    transformData(arr: Array<ListItem>, field: any):Array<ListItem> {
-        const groupedObj:any = arr.reduce((prev:any, cur:any) => {
+    transformData(arr: Array<ListItem>, field: any): Array<ListItem> {
+        const groupedObj: any = arr.reduce((prev: any, cur: any) => {
             if (!prev[cur[field]]) {
                 prev[cur[field]] = [cur];
             } else {
@@ -220,7 +246,7 @@ export class AngularMultiSelect implements OnInit, ControlValueAccessor {
             }
             return prev;
         }, {});
-        const tempArr:any = [];
+        const tempArr: any = [];
         Object.keys(groupedObj).map(function (x) {
             tempArr.push({ key: x, value: groupedObj[x] });
         });
@@ -229,7 +255,7 @@ export class AngularMultiSelect implements OnInit, ControlValueAccessor {
 }
 
 @NgModule({
-    imports: [CommonModule, FormsModule],
+    imports: [CommonModule, FormsModule,InfiniteScrollModule],
     declarations: [AngularMultiSelect, ClickOutsideDirective, ListFilterPipe, groupByPipe],
     exports: [AngularMultiSelect, ClickOutsideDirective, ListFilterPipe, groupByPipe]
 })

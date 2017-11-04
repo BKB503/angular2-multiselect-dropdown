@@ -72,4 +72,24 @@
         <div class="col-md-10"><angular2-multiselect [data]="resetExampleList" [(ngModel)]="resetExampleSelectedItems" [settings]="resetExampleSettings" (onSelect)="onItemSelect($event)" (onDeSelect)="OnItemDeSelect($event)"  (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event)"></angular2-multiselect></div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-1"></div>
+      <div class="col-md-4">
+        <h4>Dynamic Load and Search</h4>
+        <div class="col-md-10">
+            <angular2-multiselect 
+            [data]="dynamicExampleList"
+            [(ngModel)]="dynamicExampleSelectedItems"
+            [settings]="dynamicExampleSettings"
+            (onSelect)="onItemSelect($event)"
+            (onDeSelect)="OnItemDeSelect($event)"
+            (onSelectAll)="onSelectAll($event)" 
+            (onDeSelectAll)="onDeSelectAll($event)"
+            (onScrollEnd)="loadDynamicData($event)"
+            (onTyped) ="onDynamicSearch($event)">
+          </angular2-multiselect>
+        </div>
+      </div>
+
+    </div>
 </div>

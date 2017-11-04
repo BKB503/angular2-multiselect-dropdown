@@ -12,7 +12,7 @@ import { AngularMultiSelectModule } from './angular2-multiselect-dropdown/multis
     BrowserModule,
     FormsModule,
     HttpModule,
-    AngularMultiSelectModule
+    AngularMultiSelectModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
