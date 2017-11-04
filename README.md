@@ -124,6 +124,10 @@ The following list of settings are supported by the component. Configure the set
     Example : (onSelectAll)="onSelectAll($event)"
 - `onDeSelectAll` - Returns an empty array.
     Example : (onDeSelectAll)="onDeSelectAll($event)"
+-  `onScrollEnd` - Returns page number.
+    Example : (onScrollEnd)="loadMoreData($event)"
+- `onTyped` - Returns an input string.
+    Example : (onTyped)="loadSearchData($event)"
     
 
 ## Run locally
