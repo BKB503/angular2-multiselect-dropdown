@@ -33,6 +33,9 @@ export class AngularMultiSelect implements OnInit, ControlValueAccessor {
     @Input()
     settings: DropdownSettings;
 
+    @Input()
+    isLoading: boolean= false;
+
     @Output('onSelect')
     onSelect: EventEmitter<ListItem> = new EventEmitter<ListItem>();
 

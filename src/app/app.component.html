@@ -36,6 +36,7 @@
           <h4>Client-side infinite scrolling, dynamic load and search. This will load all Git hub Repos </h4>
           <angular2-multiselect 
           [data]="dynamicExampleList"
+          [isLoading]="isLoading"
           [(ngModel)]="dynamicExampleSelectedItems"
           [settings]="dynamicExampleSettings"
           (onSelect)="onItemSelect($event)"

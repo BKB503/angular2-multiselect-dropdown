@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Http,Response } from "@angular/http";
+import { Http, Response } from "@angular/http";
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
 
   selectedItems3 = [];
   dropdownSettings3 = {};
-
+  isLoading: boolean = false;
   limitSelectionSelectedItems = [];
   limitSelectionSettings = {};
 
@@ -34,11 +34,11 @@ export class AppComponent implements OnInit {
   placeholderExampleSettings = {};
 
   dynamicExampleList = [];
-  
+
   dynamicExampleSelectedItems = [];
   dynamicExampleSettings = {};
-  searchTerm: string='select2';
-  pageNo: number=0;
+  searchTerm: string = 'select2';
+  pageNo: number = 0;
 
   resetExampleList = [];
   resetExampleSelectedItems = [];
@@ -48,11 +48,11 @@ export class AppComponent implements OnInit {
   groupByExampleSelectedItems = [];
   groupByExampleSettings = {};
 
-  constructor(private _http: Http ) {
+  constructor(private _http: Http) {
 
   }
   ngOnInit() {
-    this.getAndMapReposData(this.pageNo,this.searchTerm);
+    this.getAndMapReposData(this.pageNo, this.searchTerm);
     this.singleSelectionList = [
       { "id": 1, "itemName": "India" },
       { "id": 2, "itemName": "Singapore" },
@@ -239,39 +239,40 @@ export class AppComponent implements OnInit {
 
   public loadMoreData(pageNo: number) {
     console.log(pageNo);
-   this.getAndMapReposData(pageNo,this.searchTerm)
-    
+    this.getAndMapReposData(pageNo, this.searchTerm)
+
   }
 
   public loadSearchData(searchTerm: string) {
     console.log(searchTerm);
     this.searchTerm = searchTerm;
-    this.getAndMapReposData(this.pageNo,this.searchTerm)
+    this.getAndMapReposData(this.pageNo, this.searchTerm)
   }
- 
 
-  private getRepos(pageNo: number, search: string): Observable<any>
-  {
+
+  private getRepos(pageNo: number, search: string): Observable<any> {
+
     var url = `https://api.github.com/search/repositories?page=${pageNo}&q=${search}`
-      //this._http.get(url).map((response: Response => response.json());
-      return this._http.get(url)
+    //this._http.get(url).map((response: Response => response.json());
+    return this._http.get(url)
       .map((response: Response) => <any>response.json())
-      //.do(data => console.log('All: ' + JSON.stringify(data)));
-     
+    //.do(data => console.log('All: ' + JSON.stringify(data)));
+
   }
 
-  public getAndMapReposData(pageNo: number, search:string)
-  {
-    this.getRepos(pageNo,search).subscribe(x=>{
-      if(x.items)
-        {
-          for (var i = 0; i < x.items.length; i++) {
+  public getAndMapReposData(pageNo: number, search: string) {
+    this.isLoading = true;
+    this.getRepos(pageNo, search).subscribe(x => {
+      if (x.items) {
+        for (var i = 0; i < x.items.length; i++) {
           this.dynamicExampleList.push({
             id: x.items[i].id,
             itemName: x.items[i].full_name
           })
         }
-        }
+      }
+      this.isLoading = false;
     });
+
   }
 }

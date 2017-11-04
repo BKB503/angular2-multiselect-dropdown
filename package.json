@@ -1,6 +1,6 @@
 {
   "name": "angular2-multiselect-dropdown",
-  "version": "1.3.6",
+  "version": "1.3.7",
   "description": "Angular 2 and angular 4 multiselect dropdown component.",
   "keywords": [
     "angular 2 multiselect dropdown",
@@ -10,7 +10,7 @@
   ],
   "license": "MIT",
   "angular-cli": {},
-  "author": "Pradeep Terli",
+  "author": "Bharath Belda",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -99,9 +99,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/CuppaLabs/angular2-multiselect-dropdown"
+    "url": "https://github.com/BKB503/angular2-multiselect-dropdown"
   },
   "bugs": {
-    "url": "https://github.com/CuppaLabs/angular2-multiselect-dropdown/issues"
+    "url": "https://github.com/BKB503/angular2-multiselect-dropdown/issues"
   }
 }

@@ -39,6 +39,9 @@
           />
           <label>{{item.itemName}}</label>
         </li>
+        <li *ngIf="isLoading">
+            Loading...
+        </li>
       </ul>
       <div *ngIf="settings.groupBy" [style.maxHeight]="settings.maxHeight+'px'" style="overflow: auto;">
         <ul *ngFor="let obj of groupedData ; let i = index;" class="list-grp">
